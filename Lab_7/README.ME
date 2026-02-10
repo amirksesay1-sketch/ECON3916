@@ -1,0 +1,80 @@
+# Monte Carlo Simulation: Correlated Revenue & Burn Risk Model
+
+## Overview
+This lab explores how modeling assumptions affect financial risk estimates in a startup cash-runway simulation. Using Monte Carlo simulation, we estimate the **Probability of Ruin** (bankruptcy within 24 months) under two different assumptions:
+
+1. **Naive Model** – Revenue and Burn are independent  
+2. **Improved Model** – Revenue and Burn are positively correlated (ρ = 0.7)
+
+The goal is to demonstrate how ignoring realistic correlations can significantly **overstate risk**.
+
+---
+
+## Problem Motivation
+In real companies, revenue and burn are **not independent**:
+
+- When revenue declines, management typically cuts costs.
+- When revenue grows, companies often increase spending to scale.
+
+The naive model fails to capture this behavior, allowing unrealistic scenarios where revenue collapses while burn remains high. This lab fixes that issue using a correlated stochastic process.
+
+---
+
+## Base Model (Naive Assumption)
+**Key assumptions:**
+- Revenue ~ Normal(mean = $80k, std = $30k)
+- Burn ~ Normal(mean = $100k, std = $10k)
+- Revenue and Burn are independent
+- Simulation horizon: 24 months
+- Initial cash: $2,000,000
+- Number of simulations: 1,000
+
+**Issue:**  
+This model assumes management does not react to revenue shocks, overstating the likelihood of bankruptcy.
+
+---
+
+## Improved Model (Correlated Revenue & Burn)
+To make the model more realistic, Revenue and Burn are generated jointly using a **multivariate normal distribution** with correlation ρ = 0.7.
+
+**What stays the same:**
+- Means and standard deviations
+- Time horizon
+- Initial cash
+- Monte Carlo structure
+
+**What changes:**
+- Revenue and Burn move together
+- Cost-cutting behavior is implicitly captured
+- Extreme downside scenarios are less frequent
+
+This correlation acts as a **natural hedge**, reducing the Probability of Ruin.
+
+---
+
+## Key Result
+Introducing correlation between Revenue and Burn **lowers the estimated risk of ruin** compared to the naive independent model.
+
+This demonstrates that:
+> Risk is not just about volatility — it is also about structure and dependence.
+
+---
+
+## Files
+- `simulation.py` – Monte Carlo simulation code
+- `README.md` – Lab explanation and interpretation
+
+---
+
+## Concepts Demonstrated
+- Monte Carlo simulation
+- Financial runway modeling
+- Correlation vs. independence
+- Risk overestimation due to poor assumptions
+- Multivariate normal distributions
+
+---
+
+## Conclusion
+This lab shows that realistic dependency structures matter in financial modeling. Ignoring correlation between key variables can lead to pessimistic and misleading risk assessments, while incorporating realistic behavior produces more credible results.
+
